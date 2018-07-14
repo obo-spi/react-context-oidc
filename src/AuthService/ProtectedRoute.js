@@ -9,7 +9,7 @@ import Authenticating from './Authenticating';
 const lifecycleComponent = {
   async componentWillMount() {
     const usermanager = getUserManager();
-    await authenticateUser(usermanager, this.props.location, localStorage)();
+    await authenticateUser(usermanager, this.props.location)();
   }
 };
 

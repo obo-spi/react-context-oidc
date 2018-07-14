@@ -3,17 +3,13 @@ import CallbackComponent from './CallbackComponent';
 import { withRouter } from 'react-router-dom';
 import { compose, withProps } from 'recompose';
 import { getUserManager } from './authenticationService';
-import { localStorageKeyUrlBeforeSignin } from './authenticate';
 import { oidcLog } from './loggerService';
 
 const AuthenticationCallback = ({ history, userManager }) => {
-  const successCallback = () => {
-    const urlBeforeSignin = localStorage.getItem(
-      localStorageKeyUrlBeforeSignin
-    );
+  const successCallback = user => {
     oidcLog.info('Successfull Callback');
-    if (urlBeforeSignin) {
-      history.push(urlBeforeSignin);
+    if (user.state.location) {
+      history.push(user.state.location);
     } else {
       // tslint:disable-next-line:no-console
       oidcLog.error('urlBeforeSignin null or undefined');

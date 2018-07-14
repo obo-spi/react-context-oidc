@@ -41,6 +41,7 @@ class AuthProviderComponent extends React.Component {
     this.onError = this.onError.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.onUserUnloaded = this.onUserUnloaded.bind(this);
 
     this.state.userManager.events.addUserLoaded(
       this.onUserLoaded('addUserLoaded')
@@ -79,13 +80,17 @@ class AuthProviderComponent extends React.Component {
     });
   };
 
-  onUserUnloaded = reason => async () => {
+  onUserUnloaded = reason => location => {
     oidcLog.info(`User unLoaded from ${reason}`);
     this.setState({
       ...this.state,
       oidcUser: null,
       isLoading: false
     });
+    if (location) {
+      oidcLog.info(`redirect to ${location}`);
+      this.props.history.push(location);
+    }
   };
 
   async login() {
@@ -94,14 +99,10 @@ class AuthProviderComponent extends React.Component {
       oidcUser: null,
       isLoading: true
     });
-    await authenticateUser(
-      this.state.userManager,
-      this.props.location,
-      localStorage
-    )();
+    await authenticateUser(this.state.userManager, this.props.location)();
   }
 
-  logout() {
+  logout(location) {
     this.setState({
       ...this.state,
       oidcUser: null,
@@ -109,7 +110,7 @@ class AuthProviderComponent extends React.Component {
     });
     this.state.userManager
       .removeUser()
-      .then(this.onUserUnloaded)
+      .then(this.onUserUnloaded('lougout')(location))
       .catch(this.onError);
   }
 

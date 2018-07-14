@@ -19,7 +19,7 @@ const App = () => (
       <AuthProvider
         isEnabled={isEnabled}
         configuration={authenticationConfig.config}
-        loggerLevel={0}
+        loggerLevel={4}
       >
         <Header />
         <Routes />

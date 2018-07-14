@@ -4,8 +4,6 @@ let _level = Log.DEBUG;
 let logger = console;
 
 export const setLogger = (level, logger) => {
-  // Levels are ordered from most to least verbose.
-  // The DEBUG level includes all the log levels.
   const validOidcClientLevels = [
     Log.DEBUG, // 4
     Log.INFO, // 3
@@ -27,29 +25,25 @@ export const setLogger = (level, logger) => {
 
 const debug = msg => {
   if (_level >= Log.DEBUG) {
-    /* tslint:disable no-console */
-    logger.debug(`DEBUG [OpenIdConnect] ${msg}`);
+    logger.debug(`DEBUG [react-context-oidc] ${msg}`);
   }
 };
 
 const info = msg => {
   if (_level >= Log.INFO) {
-    /* tslint:disable no-console */
-    logger.info(`INFO [OpenIdConnect] ${msg}`);
+    logger.info(`INFO [react-context-oidc] ${msg}`);
   }
 };
 
 const warn = msg => {
   if (_level >= Log.WARN) {
-    /* tslint:disable no-console */
-    logger.warn(`WARN [OpenIdConnect] ${msg}`);
+    logger.warn(`WARN [react-context-oidc] ${msg}`);
   }
 };
 
 const error = msg => {
   if (_level >= Log.ERROR) {
-    /* tslint:disable no-console */
-    logger.error(`ERROR [OpenIdConnect] ${msg}`);
+    logger.error(`ERROR [react-context-oidc] ${msg}`);
   }
 };
 
