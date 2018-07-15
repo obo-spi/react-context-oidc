@@ -1,23 +1,39 @@
 {
-  "name": "new",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://codesandbox.io/s/new",
-  "main": "src/index.js",
-  "dependencies": {
+  "name": "react-context-oidc",
+  "version": "0.0.1",
+  "author": "Olivier YOUF",
+  "license": "MIT",
+  "description": "A package for managing OpenID Connect authentication throw oidc client in redux apps using context Api",
+  "keywords": [
+    "oidc",
+    "context-api",
+    "react-component",
+    "openid",
+    "oauth2"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oyouf/react-context-oidc.git"
+  },
+  "main": "dist/react-context-oidc.js",
+  "peerDependencies": {
     "oidc-client": "^1.5.2",
-    "react": "16.3.0",
-    "react-dom": "16.3.0",
+    "react": ">=16.3.0",
+    "react-dom": ">=16.3.0",
     "react-router-dom": "4.2.2",
-    "react-scripts": "1.1.0",
     "recompose": "^0.27.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "react-scripts": "1.1.0"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "mocha-webpack --webpack-config webpack.config-test.js \"tests/**/*.test.js\"",
+    "build": "webpack -p",
+    "prepublish": "npm run test",
+    "pretest": "npm run build"
+  },
+  "bugs": {
+    "url": "https://github.com/oyouf/react-context-oidc/issues",
+    "email": "olivier.youf@gmail.com"
   }
 }

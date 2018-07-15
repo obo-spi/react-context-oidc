@@ -1,0 +1,36 @@
+language: node_js
+
+node_js:
+  - '5'
+  - ‘4’
+
+# échoue dès qu'une erreur intervient
+matrix:
+  fast_finish: true
+
+# met en cache node_modules, à noter que dans ce genre d’utilisation pour des
+# bibliothèques open source consommées via npm, il ne faudra pas oublier
+# npm prune utilisé ci-après, histoire de ne pas lancer des tests avec
+# des paquets encore en cache mais non présents dans le package.json
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  - npm prune
+
+# partie intéressante : ici on ne va déployer que les commits sur la
+# branche master uniquement pour une version de node
+# (car sinon on déploierait plusieurs fois…)
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: ./scripts/deploy.sh
+  on:
+    branch: master
+    node: '5'
+
+# variables d'env
+env:
+  global:
+    - NODE_ENV=production
