@@ -1,7 +1,11 @@
-export { AuthProvider, AuthConsumer } from './AuthContext';
-export { default as ProtectedRoute } from './ProtectedRoute';
+export {
+  AuthProvider,
+  AuthConsumer,
+  withOidcUser,
+  ProtectedRoute
+} from './Context';
 export {
   isRequireAuthentication,
   authenticateUser,
   trySilentAuthenticate
-} from './authenticate';
+} from './Services';
