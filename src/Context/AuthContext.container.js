@@ -60,17 +60,13 @@ export const onUserLoaded = props => user => {
   });
 };
 
-export const onUserUnloaded = props => redirectLocation => {
+export const onUserUnloaded = props => {
   oidcLog.info(`User unloaded `);
   props.setOidcState({
     ...props.oidcState,
     oidcUser: null,
     isLoading: false
   });
-  if (redirectLocation) {
-    oidcLog.info(`redirect to ${redirectLocation}`);
-    props.history.push(redirectLocation);
-  }
 };
 
 export const setDefaultState = ({ configuration, loggerLevel, logger }) => {
@@ -100,8 +96,11 @@ export const logout = props => async redirectLocation => {
     isLoading: true
   });
   try {
+    if (redirectLocation) {
+      oidcLog.info(`redirect to ${redirectLocation}`);
+      props.history.push(redirectLocation);
+    }
     await props.oidcState.userManager.removeUser();
-    props.onUserUnloaded(redirectLocation);
     oidcLog.info('Logout successfull');
   } catch (error) {
     props.onError(error);
