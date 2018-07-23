@@ -2,7 +2,8 @@ export {
   AuthProvider,
   AuthConsumer,
   withOidcUser,
-  ProtectedRoute
+  OidcSecure,
+  withOidcSecure
 } from './Context';
 export {
   isRequireAuthentication,

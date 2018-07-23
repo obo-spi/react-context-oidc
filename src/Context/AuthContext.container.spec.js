@@ -38,8 +38,7 @@ describe('AuthContext tests suite', () => {
       push: jest.fn()
     };
     setOidcStateMock = jest.fn();
-    onUserUnloadedMockReturn = jest.fn();
-    onUserUnloadedMock = jest.fn(() => onUserUnloadedMockReturn);
+    onUserUnloadedMock = jest.fn();
     propsMock = {
       history: historyMock,
       oidcState: previousOidcState,
@@ -111,8 +110,7 @@ describe('AuthContext tests suite', () => {
       isLoading: true,
       oidcUser: null
     });
-    expect(onUserUnloadedMock).toBeCalledWith('lougout');
-    expect(onUserUnloadedMockReturn).toBeCalledWith('redirection Url');
+    expect(onUserUnloadedMock).toBeCalledWith('redirection Url');
   });
 
   it('should set state with erreor when call onError function', () => {

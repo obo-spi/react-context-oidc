@@ -1,7 +1,7 @@
 import { oidcLog } from './loggerService';
 
 export const isRequireAuthentication = () => props => {
-  return props.isForce || !props.user;
+  return props.isForce || !props.oidcUser;
 };
 
 export const authenticateUser = (userManager, location) => async (
@@ -10,8 +10,8 @@ export const authenticateUser = (userManager, location) => async (
   if (!userManager || !userManager.getUser) {
     return;
   }
-  const user = await userManager.getUser();
-  if (isRequireAuthentication()({ user, isForce })) {
+  const oidcUser = await userManager.getUser();
+  if (isRequireAuthentication()({ oidcUser, isForce })) {
     oidcLog.info('authenticate user...');
     await userManager.signinRedirect({ data: { location: location.pathname } });
   }

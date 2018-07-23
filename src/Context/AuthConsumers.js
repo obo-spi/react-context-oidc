@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import { Route, Redirect, withRouter } from 'react-router-dom';
-import { compose, branch, lifecycle } from 'recompose';
+import { withRouter } from 'react-router-dom';
+import { compose, branch, lifecycle, defaultProps } from 'recompose';
 
-import { AuthConsumer } from './AuthContext.container';
+import { withOidcUser } from './AuthContext.container';
 import {
   authenticateUser,
   getUserManager,
@@ -19,9 +19,10 @@ const lifecycleComponent = {
   }
 };
 
-const wrapAuthenticating = WrappedComponent => props => <Authenticating />;
+const wrapAuthenticating = () => () => <Authenticating />;
 
-export const enhance = compose(
+export const withOidcSecure = compose(
+  withOidcUser,
   withRouter,
   lifecycle(lifecycleComponent),
   branch(isRequireAuthentication(), wrapAuthenticating)
@@ -33,25 +34,14 @@ const Dummy = props => {
 
 const OidcSecure = props => {
   if (props.isEnabled) {
-    const Secure = enhance(Dummy);
+    const Secure = withOidcSecure(Dummy);
     return <Secure {...props}>{props.children}</Secure>;
   }
   return <Dummy {...props} />;
 };
 
-const ProtectedRoute = ({ component: Component, isEnabled, ...rest }) => (
-  <AuthConsumer>
-    {({ oidcUser }) => (
-      <OidcSecure user={oidcUser} isEnabled={isEnabled}>
-        <Route
-          render={props =>
-            oidcUser ? <Component {...props} /> : <Redirect to="/" />
-          }
-          {...rest}
-        />
-      </OidcSecure>
-    )}
-  </AuthConsumer>
-);
+const withDefaultProps = defaultProps({
+  isEnabled: true
+});
 
-export default ProtectedRoute;
+export default withDefaultProps(OidcSecure);

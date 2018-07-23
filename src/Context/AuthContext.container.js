@@ -101,7 +101,7 @@ export const logout = props => async redirectLocation => {
   });
   try {
     await props.oidcState.userManager.removeUser();
-    props.onUserUnloaded('lougout')(redirectLocation);
+    props.onUserUnloaded(redirectLocation);
     oidcLog.info('Logout successfull');
   } catch (error) {
     props.onError(error);
@@ -192,9 +192,9 @@ const AuthProviderComponentHOC = compose(
   withOidcState,
   withOidcHandlers,
   withSecondOidcHandlers,
-  withOidcProps,
   withLifeCycle,
-  AuthProviderComponentWithInit
+  AuthProviderComponentWithInit,
+  withOidcProps
 );
 
 const AuthProvider = AuthProviderComponentHOC(AuthProviderComponent);
