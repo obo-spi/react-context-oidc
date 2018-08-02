@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AuthContext } from './AuthContextCreator';
+import { AuthContext } from './AuthenticationContextCreator';
 import { OidcRoutes } from '../Routes';
 
 const propTypes = {

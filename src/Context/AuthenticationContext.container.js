@@ -12,11 +12,12 @@ import {
 import {
   authenticationService,
   authenticateUser,
+  logoutUser,
   setLogger,
   oidcLog
 } from '../Services';
-import AuthProviderComponent from './AuthContext';
-import { AuthContext } from './AuthContextCreator';
+import AuthProviderComponent from './AuthenticationContext';
+import { AuthContext } from './AuthenticationContextCreator';
 
 const propTypes = {
   notAuthentified: PropTypes.node,
@@ -60,7 +61,7 @@ export const onUserLoaded = props => user => {
   });
 };
 
-export const onUserUnloaded = props => {
+export const onUserUnloaded = props => () => {
   oidcLog.info(`User unloaded `);
   props.setOidcState({
     ...props.oidcState,
@@ -75,7 +76,8 @@ export const setDefaultState = ({ configuration, loggerLevel, logger }) => {
     oidcUser: undefined,
     userManager: authenticationService(configuration),
     isLoading: false,
-    error: ''
+    error: '',
+    isFrozen: false
   };
 };
 
@@ -89,18 +91,15 @@ export const login = props => async () => {
   await authenticateUser(props.oidcState.userManager, props.location)();
 };
 
-export const logout = props => async redirectLocation => {
+export const logout = props => async () => {
   props.setOidcState({
     ...props.oidcState,
     oidcUser: null,
-    isLoading: true
+    isLoading: true,
+    isFrozen: true
   });
   try {
-    if (redirectLocation) {
-      oidcLog.info(`redirect to ${redirectLocation}`);
-      props.history.push(redirectLocation);
-    }
-    await props.oidcState.userManager.removeUser();
+    await logoutUser(props.oidcState.userManager);
     oidcLog.info('Logout successfull');
   } catch (error) {
     props.onError(error);
@@ -126,7 +125,13 @@ export const AuthProviderComponentWithInit = WrappedComponent => {
       props.oidcState.userManager.events.addUserUnloaded(props.onUserUnloaded);
       props.oidcState.userManager.events.addUserSignedOut(props.onUserUnloaded);
     }
-
+    shouldComponentUpdate(nextProps, nextState) {
+      // Hack to avoid resfreshing user before logout
+      oidcLog.info(
+        `Protected component update : ${!nextProps.oidcState.isFrozen}`
+      );
+      return !nextProps.oidcState.isFrozen;
+    }
     render() {
       return <WrappedComponent {...this.props} />;
     }

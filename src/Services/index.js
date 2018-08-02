@@ -4,5 +4,6 @@ export {
   authenticateUser,
   trySilentAuthenticate,
   withOidcUser,
-  isRequireAuthentication
+  isRequireAuthentication,
+  logoutUser
 } from './oidcServices';

@@ -1,4 +1,4 @@
-import * as container from './AuthContext.container';
+import * as container from './AuthenticationContext.container';
 import * as services from '../Services';
 
 jest.mock('../Services');

@@ -17,6 +17,17 @@ export const authenticateUser = (userManager, location) => async (
   }
 };
 
+export const logoutUser = async userManager => {
+  if (!userManager || !userManager.getUser) {
+    return;
+  }
+  const oidcUser = await userManager.getUser();
+  if (oidcUser) {
+    oidcLog.info('Logout user...');
+    await userManager.signoutRedirect();
+  }
+};
+
 export const trySilentAuthenticateFunction = authenticateUser => (
   userManager,
   location
