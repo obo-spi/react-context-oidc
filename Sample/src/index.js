@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { AuthProvider } from './AuthService';
+import { AuthProvider } from 'react-context-oidc';
 import Header from './Layout/Header';
 import Routes from './Router';
 import configuration from './configuration';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { oidcSecure } from 'react-context-oidc';
 import Home from 'Pages/Home';
 import Dashboard from 'Pages/Dashboard';
 import Admin from 'Pages/Dashboard';
-import { oidcSecure } from 'AuthService';
 
 const Routes = () => (
   <Switch>

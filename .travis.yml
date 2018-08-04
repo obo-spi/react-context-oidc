@@ -1,8 +1,7 @@
 language: node_js
 
 node_js:
-  - '5'
-  - ‘4’
+  - "5"
 
 # échoue dès qu'une erreur intervient
 matrix:
@@ -18,6 +17,7 @@ cache:
 
 before_install:
   - npm prune
+  - npm install react@16.3 react-scripts oidc-client
 
 # partie intéressante : ici on ne va déployer que les commits sur la
 # branche master uniquement pour une version de node

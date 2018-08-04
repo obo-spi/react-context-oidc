@@ -1,5 +1,5 @@
 import React from 'react'
-import { AuthConsumer } from 'AuthService'
+import { AuthConsumer } from 'react-context-oidc'
 import { Link } from 'react-router-dom'
 
 const headerStyle = {
