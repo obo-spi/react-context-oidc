@@ -28,14 +28,11 @@ describe('AuthContext tests suite', () => {
 
     services.authenticateUser = jest.fn(() => () => jest.fn());
     services.authenticationService = jest.fn(() => userManagerMock);
-
+    services.logoutUser = jest.fn();
     previousOidcState = {
       prop1: 'value1',
       prop2: 'value2',
       userManager: userManagerMock
-    };
-    historyMock = {
-      push: jest.fn()
     };
     setOidcStateMock = jest.fn();
     onUserUnloadedMockReturn = jest.fn();
@@ -61,7 +58,7 @@ describe('AuthContext tests suite', () => {
   });
 
   it('should set state and redirect to location when call onUserUnload', () => {
-    container.onUserUnloaded(propsMock);
+    container.onUserUnloaded(propsMock)();
     expect(propsMock.setOidcState).toBeCalledWith({
       ...previousOidcState,
       isLoading: false,
@@ -76,7 +73,8 @@ describe('AuthContext tests suite', () => {
       oidcUser: undefined,
       userManager: userManagerMock,
       isLoading: false,
-      error: ''
+      error: '',
+      isFrozen: false
     });
   });
 
@@ -98,9 +96,10 @@ describe('AuthContext tests suite', () => {
     expect(propsMock.setOidcState).toBeCalledWith({
       ...previousOidcState,
       isLoading: true,
-      oidcUser: null
+      oidcUser: null,
+      isFrozen: true
     });
-    expect(historyMock.push).toBeCalledWith('redirection Url');
+    expect(services.logoutUser).toBeCalledWith(userManagerMock);
   });
 
   it('should set state with erreor when call onError function', () => {
