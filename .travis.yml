@@ -17,7 +17,7 @@ cache:
 
 before_install:
   - npm prune
-  - npm install react@16.3 react-scripts oidc-client
+  - npm install react@16.3 react-scripts oidc-client react-router-dom
 
 # partie intéressante : ici on ne va déployer que les commits sur la
 # branche master uniquement pour une version de node
