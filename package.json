@@ -42,7 +42,8 @@
   "scripts": {
     "build:lib": "babel src -d dist/lib --ignore __tests__,spec.js,test.js,stories.js --source-maps",
     "build": "cross-env-shell NODE_ENV=production \"npm run build:lib\"",
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "bugs": {
     "url": "https://github.com/oyouf/react-context-oidc/issues",
