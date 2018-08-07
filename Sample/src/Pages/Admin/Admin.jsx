@@ -1,11 +1,12 @@
 import React from 'react';
-import { OidcSecure } from 'react-context-oidc';
+import { withOidcUser, OidcSecure } from 'react-context-oidc';
 
-const Dashboard = () => (
-  <OidcSecure>
+const Admin = ({ oidcUser }) => (
+  <OidcSecure isEnabled={false}>
     <h1>Admin</h1>
     <p>Protected Admin</p>
+    {oidcUser && <p>Bonjour {oidcUser.profile.name}</p>}
   </OidcSecure>
 );
 
-export default Dashboard;
+export default withOidcUser(Admin);
