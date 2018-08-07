@@ -18,7 +18,7 @@ cache:
 
 before_install:
   - npm prune
-  - npm install react react-scripts oidc-client react-router-dom recompose 
+  - npm install react@16.4 react-scripts oidc-client react-router-dom recompose 
 
 jobs:
   include:
