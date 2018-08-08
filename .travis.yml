@@ -1,3 +1,8 @@
+stages:
+  - compile
+  - test
+  - deploy
+
 language: node_js
 
 node_js:
