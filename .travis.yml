@@ -1,20 +1,14 @@
 language: node_js
-
 node_js:
   - "8"
   - "9"
 
-# échoue dès qu'une erreur intervient
-matrix:
-  fast_finish: true
-
-before_install:
-  - npm install react@16.4 react-scripts oidc-client react-router-dom recompose 
 cache: yarn
 
 install: yarn
 script:
   - yarn test
+
 jobs:
   include:
     - stage: npm release
