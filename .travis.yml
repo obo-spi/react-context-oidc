@@ -1,25 +1,17 @@
 language: node_js
 
 node_js:
-  - "8"
-  - "9"
+  - "7"
+  - "6"
+  - "5"
+  - "4"
 
-# échoue dès qu'une erreur intervient
-matrix:
-  fast_finish: true
+cache: yarn
 
-# met en cache node_modules, à noter que dans ce genre d’utilisation pour des
-# bibliothèques open source consommées via npm, il ne faudra pas oublier
-# npm prune utilisé ci-après, histoire de ne pas lancer des tests avec
-# des paquets encore en cache mais non présents dans le package.json
-cache:
-  directories:
-    - node_modules
-
-before_install:
-  - npm prune
-  - npm install react@16.4 react-scripts oidc-client react-router-dom recompose 
-
+install: yarn
+script:
+  - yarn test
+  
 jobs:
   include:
     - stage: npm release

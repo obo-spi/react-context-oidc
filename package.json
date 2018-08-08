@@ -41,8 +41,7 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --env=jsdom"
   },
   "bugs": {
     "url": "https://github.com/oyouf/react-context-oidc/issues",
