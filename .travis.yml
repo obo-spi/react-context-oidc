@@ -6,7 +6,7 @@ node_js:
 cache: yarn
 
 before_install:
-  - yarn add jest react
+  - yarn add jest react babel-preset-react-app
 install: yarn
 script:
   - yarn test
