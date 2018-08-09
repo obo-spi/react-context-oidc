@@ -47,6 +47,10 @@
     "url": "https://github.com/oyouf/react-context-oidc/issues",
     "email": "olivier.youf@gmail.com"
   },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "recompose": "^0.28.2"
