@@ -1,18 +1,24 @@
 language: node_js
-
 node_js:
-  - "8"
-  - "9"
+  - "4"
+  - "5"
 
 cache: yarn
 
+<<<<<<< HEAD
 before_install:
   - npm i -g npm@5.7.1
   - npm i react-scripts react react-dom react-router-dom prop-types oidc-client
 
+=======
+>>>>>>> c5ec755009a2b24e5ce300b82252d8e02fe92c28
 install: yarn
 script:
   - yarn test
+
+before_install:
+  - npm install react-scripts
+
 jobs:
   include:
     - stage: npm release
