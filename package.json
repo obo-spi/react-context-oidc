@@ -1,6 +1,6 @@
 {
   "name": "react-context-oidc",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Olivier YOUF",
   "license": "MIT",
   "description": "A package for managing OpenID Connect authentication throw oidc client in redux apps using context Api",
