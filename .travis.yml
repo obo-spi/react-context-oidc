@@ -13,9 +13,6 @@ install: yarn
 script:
   - yarn test
 
-before_install:
-  - npm install react-scripts
-
 jobs:
   include:
     - stage: npm release
