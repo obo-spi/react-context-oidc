@@ -6,7 +6,7 @@ node_js:
 cache: yarn
 
 before_install:
-  - yarn add jest
+  - yarn add jest react
 install: yarn
 script:
   - yarn test
