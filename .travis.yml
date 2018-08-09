@@ -6,9 +6,7 @@ node_js:
 cache: yarn
 
 before_install:
-  - npm i -g npm@6.3.0
-  - npm i jest react react-dom react-router-dom prop-types oidc-client
-
+  - yarn add jest
 install: yarn
 script:
   - yarn test
