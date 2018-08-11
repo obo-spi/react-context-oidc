@@ -1,6 +1,6 @@
 export {
-  AuthProvider,
-  AuthConsumer,
+  AuthenticationProvider,
+  AuthenticationConsumer,
   withOidcUser,
   OidcSecure,
   withOidcSecure
@@ -8,5 +8,6 @@ export {
 export {
   isRequireAuthentication,
   authenticateUser,
-  trySilentAuthenticate
+  trySilentAuthenticate,
+  oidcLog
 } from './Services';
