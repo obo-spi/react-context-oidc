@@ -1,6 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
-var nodeExternals = require('webpack-node-externals');
+const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: ['babel-polyfill', './src/index.js'],
@@ -11,19 +11,32 @@ module.exports = {
   },
   externals: nodeExternals(),
   module: {
-    loaders: [
+    // configuration regarding modules
+    rules: [
+      // rules for modules (configure loaders, parser options, etc.)
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
+        include: [path.resolve(__dirname, 'src')],
+        exclude: /node_modules/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        options: {
+          presets: ['react', 'es2015', 'stage-0']
+        }
       }
     ]
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      compress: { warnings: false },
-      screw_ie8: true
-    })
-  ]
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          compress: false,
+          ecma: 6,
+          mangle: true
+        },
+        sourceMap: true
+      })
+    ]
+  }
 };
