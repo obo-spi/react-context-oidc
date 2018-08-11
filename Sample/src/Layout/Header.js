@@ -38,7 +38,7 @@ export default () => (
                     admin
                   </Link>
                 </li>
-                <button onClick={() => props.logout('/')}>logout</button>
+                <button onClick={props.logout}>logout</button>
               </ul>
             ) : (
               <button onClick={props.login}>login</button>
