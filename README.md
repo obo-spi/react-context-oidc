@@ -29,7 +29,7 @@ To work with API Context, react>=16.3 and react-router are required.
 #### Documentation
 
 - [API Documentation](docs/API.md)
-- [Sample application documentation](docs/Sample.md)
+- [Sample application documentation](docs/SAMPLE.md)
 
 ### What's next ? 
 In the next releases we will propose : 

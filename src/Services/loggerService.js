@@ -1,7 +1,7 @@
 import { Log } from 'oidc-client';
 
-let _level = Log.DEBUG;
-let _logger = console;
+export let _level = Log.DEBUG;
+export let _logger = console;
 
 export const setLogger = (level, logger) => {
   const validOidcClientLevels = [
@@ -24,27 +24,27 @@ export const setLogger = (level, logger) => {
   Log.logger = logger;
 };
 
-const debug = msg => {
+const debug = (...msg) => {
   if (_level >= Log.DEBUG) {
-    _logger.debug('DEBUG [react-context-oidc]', {...msg});
+    _logger.debug('DEBUG [react-context-oidc] :', ...msg);
   }
 };
 
-const info = msg => {
+const info = (...msg) => {
   if (_level >= Log.INFO) {
-    _logger.info('INFO [react-context-oidc]', {...msg});
+    _logger.info('INFO [react-context-oidc] :', ...msg);
   }
 };
 
-const warn = msg => {
+const warn = (...msg) => {
   if (_level >= Log.WARN) {
-    _logger.warn('WARN [react-context-oidc]', {...msg});
+    _logger.warn('WARN [react-context-oidc] :', ...msg);
   }
 };
 
-const error = msg => {
+const error = (...msg) => {
   if (_level >= Log.ERROR) {
-    _logger.error('ERROR [react-context-oidc]', {...msg});
+    _logger.error('ERROR [react-context-oidc] :', ...msg);
   }
 };
 

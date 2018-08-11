@@ -8,7 +8,7 @@ import configuration from './configuration';
 
 const origin = document.location.origin;
 
-const authenticationConfig = configuration.configurations[1];
+const authenticationConfig = configuration.configurations[0];
 if (!authenticationConfig) {
   throw new Error(`Configuration not found for origin ${origin}`);
 }

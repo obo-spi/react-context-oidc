@@ -44,7 +44,9 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "test": "jest --env=jsdom"
+    "test": "jest --env=jsdom",
+    "testwatch": "jest --env=jsdom --watch",
+    "coverage": "jest --env=jsdom --coverage"
   },
   "bugs": {
     "url": "https://github.com/oyouf/react-context-oidc/issues",
@@ -56,6 +58,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "react-test-renderer": "^16.4.2",
     "recompose": "^0.28.2"
   }
 }

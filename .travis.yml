@@ -4,7 +4,7 @@ node_js:
   - "9"
 
 before_install:
-  - yarn add jest react babel-preset-react-app babel-preset-es2015 babel-preset-stage-0 react-dom react-router-dom prop-types oidc-client webpack webpack-command webpack-node-externals babel-loader
+  - yarn add jest react react-test-renderer babel-preset-react-app babel-preset-es2015 babel-preset-stage-0 react-dom react-router-dom prop-types oidc-client webpack webpack-command webpack-node-externals babel-loader
 install: yarn
 script:
   - yarn test

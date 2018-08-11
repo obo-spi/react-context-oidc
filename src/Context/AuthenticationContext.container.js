@@ -208,7 +208,7 @@ AuthenticationProvider.defaultProps = defaultProps;
 const AuthenticationConsumer = AuthenticationContext.Consumer;
 
 const withOidcUser = Component => props => (
-  <AuthConsumer>
+  <AuthenticationConsumer>
     {({ oidcUser }) =>
       oidcUser ? (
         <Component {...props} oidcUser={oidcUser} />
@@ -216,7 +216,7 @@ const withOidcUser = Component => props => (
         <Component {...props} oidcUser={null} />
       )
     }
-  </AuthConsumer>
+  </AuthenticationConsumer>
 );
 
 export { AuthenticationProvider, AuthenticationConsumer, withOidcUser };
