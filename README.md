@@ -7,11 +7,12 @@ Oidc Integration for react using Context API. Inspired by the [Redux OIDC Packag
 ### Description
 
 This package handles oidc-client package in a react application. It enables react application to connect with an external login, and protect the fully application or just few routes or component. The packages proposes the following features :
-- *AuthenticationProvider* : Api Context Provider to initate the package (usually in index.js)
-- *AuthenticationConsummer* : to manipulate some oidc objects and functions
-- *OidcSecure* : A component to protect anothers components.
-- *withOidcSecure* : A Hoc to protect routes or components
-- *Helpers* to manage oidc client 
+
+- _AuthenticationProvider_ : Api Context Provider to initate the package (usually in index.js)
+- _AuthenticationConsummer_ : to manipulate some oidc objects and functions
+- _OidcSecure_ : A component to protect anothers components.
+- _withOidcSecure_ : A Hoc to protect routes or components
+- _Helpers_ to manage oidc client
 
 ### Installation
 
@@ -20,7 +21,7 @@ This package handles oidc-client package in a react application. It enables reac
 #### Peer dependencies
 
 This package wraps [oidc-client-js](https://github.com/IdentityModel/oidc-client-js)
-Oidc-client is required to use the package : 
+Oidc-client is required to use the package :
 
 `npm install --save oidc-client`
 
@@ -28,11 +29,12 @@ To work with API Context, react>=16.3 and react-router are required.
 
 #### Documentation
 
-- [API Documentation](docs/API.md)
-- [Sample application documentation](docs/SAMPLE.md)
+- [API Documentation](doc/API.md)
+- [Sample application documentation](doc/SAMPLE.md)
 
-### What's next ? 
-In the next releases we will propose : 
+### What's next ?
+
+In the next releases we will propose :
+
 - Possibility to protect fully application or just some parts of it
 - Type definition for typescript using.
-
