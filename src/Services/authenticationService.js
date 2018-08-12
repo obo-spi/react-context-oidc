@@ -2,6 +2,11 @@ import { UserManager } from 'oidc-client';
 
 let userManager;
 
+//for tests
+export const setUserManager = userManagerToSet =>{
+  userManager = userManagerToSet
+}
+
 export const getUserManager = () => {
   return userManager;
 };

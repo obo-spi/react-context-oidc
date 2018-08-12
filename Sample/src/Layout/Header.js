@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthConsumer } from 'react-context-oidc';
+import { AuthenticationConsumer } from 'react-context-oidc';
 import { Link } from 'react-router-dom';
 
 const headerStyle = {
@@ -16,7 +16,7 @@ const linkStyle = {
 
 export default () => (
   <header>
-    <AuthConsumer>
+    <AuthenticationConsumer>
       {props => {
         return (
           <div style={headerStyle}>
@@ -38,7 +38,7 @@ export default () => (
                     admin
                   </Link>
                 </li>
-                <button onClick={() => props.logout('/')}>logout</button>
+                <button onClick={props.logout}>logout</button>
               </ul>
             ) : (
               <button onClick={props.login}>login</button>
@@ -46,6 +46,6 @@ export default () => (
           </div>
         );
       }}
-    </AuthConsumer>
+    </AuthenticationConsumer>
   </header>
 );

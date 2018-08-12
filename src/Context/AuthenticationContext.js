@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AuthContext } from './AuthenticationContextCreator';
+import { AuthenticationContext } from './AuthenticationContextCreator';
 import { OidcRoutes } from '../Routes';
 
 const propTypes = {
@@ -20,8 +20,8 @@ const defaultProps = {
   isEnabled: true
 };
 
-const AuthProviderComponent = props => (
-  <AuthContext.Provider
+const AuthenticationProviderComponent = props => (
+  <AuthenticationContext.Provider
     value={{
       isLoading: props.isLoading,
       oidcUser: props.oidcUser,
@@ -36,10 +36,10 @@ const AuthProviderComponent = props => (
     >
       {props.children}
     </OidcRoutes>
-  </AuthContext.Provider>
+  </AuthenticationContext.Provider>
 );
 
-AuthProviderComponent.propTypes = propTypes;
-AuthProviderComponent.defaultProps = defaultProps;
+AuthenticationProviderComponent.propTypes = propTypes;
+AuthenticationProviderComponent.defaultProps = defaultProps;
 
-export default AuthProviderComponent;
+export default AuthenticationProviderComponent;

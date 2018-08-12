@@ -16,8 +16,8 @@ import {
   setLogger,
   oidcLog
 } from '../Services';
-import AuthProviderComponent from './AuthenticationContext';
-import { AuthContext } from './AuthenticationContextCreator';
+import AuthenticationProviderComponent from './AuthenticationContext';
+import { AuthenticationContext } from './AuthenticationContextCreator';
 
 const propTypes = {
   notAuthentified: PropTypes.node,
@@ -115,7 +115,7 @@ export const onError = props => error => {
   });
 };
 
-export const AuthProviderComponentWithInit = WrappedComponent => {
+export const AuthenticationProviderComponentWithInit = WrappedComponent => {
   class ConstructedComponent extends React.Component {
     constructor(props) {
       super(props);
@@ -191,24 +191,24 @@ export const withLifeCycle = lifecycle({
   }
 });
 
-const AuthProviderComponentHOC = compose(
+const AuthenticationProviderComponentHOC = compose(
   withRouter,
   withOidcState,
   withOidcHandlers,
   withSecondOidcHandlers,
   withLifeCycle,
-  AuthProviderComponentWithInit,
+  AuthenticationProviderComponentWithInit,
   withOidcProps
 );
 
-const AuthProvider = AuthProviderComponentHOC(AuthProviderComponent);
+const AuthenticationProvider = AuthenticationProviderComponentHOC(AuthenticationProviderComponent);
 
-AuthProvider.propTypes = propTypes;
-AuthProvider.defaultProps = defaultProps;
-const AuthConsumer = AuthContext.Consumer;
+AuthenticationProvider.propTypes = propTypes;
+AuthenticationProvider.defaultProps = defaultProps;
+const AuthenticationConsumer = AuthenticationContext.Consumer;
 
 const withOidcUser = Component => props => (
-  <AuthConsumer>
+  <AuthenticationConsumer>
     {({ oidcUser }) =>
       oidcUser ? (
         <Component {...props} oidcUser={oidcUser} />
@@ -216,7 +216,7 @@ const withOidcUser = Component => props => (
         <Component {...props} oidcUser={null} />
       )
     }
-  </AuthConsumer>
+  </AuthenticationConsumer>
 );
 
-export { AuthProvider, AuthConsumer, withOidcUser };
+export { AuthenticationProvider, AuthenticationConsumer, withOidcUser };

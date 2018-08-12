@@ -5,17 +5,19 @@ jest.mock('./loggerService');
 describe('authenticate testing', () => {
   const userMock = {};
   const authenticateUserMock = jest.fn(() => jest.fn());
-  const userManagerMock = {
-    getUser: jest.fn(() => userMock),
-    signinRedirect: jest.fn(),
-    signinSilent: jest.fn()
-  };
+  let userManagerMock;
 
   const locationMock = {
     pathname: '/pathname'
   };
 
   beforeEach(() => {
+    userManagerMock = {
+      getUser: jest.fn(() => userMock),
+      signinRedirect: jest.fn(),
+      signinSilent: jest.fn(),
+      signoutRedirect: jest.fn()
+    };
     jest.clearAllMocks();
   });
 
@@ -64,5 +66,23 @@ describe('authenticate testing', () => {
     );
     await trySilentAuthenticate(userManagerThrow, locationMock)();
     expect(authenticateUserMock).toBeCalled();
+  });
+
+  it('logoutUser should do nothing if userManager is undefined', () => {
+    authenticate.logoutUser(undefined, locationMock);
+    expect(userManagerMock.getUser).not.toBeCalled();
+  });
+
+  it('logoutUser should get user with authManager settedbut return nothing', async () => {
+    userManagerMock.getUser = jest.fn();
+    await authenticate.logoutUser(userManagerMock, locationMock);
+    expect(userManagerMock.getUser).toBeCalled();
+    expect(userManagerMock.signoutRedirect).not.toBeCalled();
+  });
+
+  it('logoutUser should call logout with a user ', async () => {
+    await authenticate.logoutUser(userManagerMock, locationMock);
+    expect(userManagerMock.getUser).toBeCalled();
+    expect(userManagerMock.signoutRedirect).toBeCalled();
   });
 });
