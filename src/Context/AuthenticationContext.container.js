@@ -107,7 +107,7 @@ export const logout = props => async () => {
 };
 
 export const onError = props => error => {
-  oidcLog.error(`Error in loadUser() function: ${error.message}`);
+  oidcLog.error(`Error : ${error.message}`);
   props.setOidcState({
     ...props.oidcState,
     error: error.message,
@@ -201,7 +201,9 @@ const AuthenticationProviderComponentHOC = compose(
   withOidcProps
 );
 
-const AuthenticationProvider = AuthenticationProviderComponentHOC(AuthenticationProviderComponent);
+const AuthenticationProvider = AuthenticationProviderComponentHOC(
+  AuthenticationProviderComponent
+);
 
 AuthenticationProvider.propTypes = propTypes;
 AuthenticationProvider.defaultProps = defaultProps;

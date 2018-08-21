@@ -25,11 +25,8 @@ const lifecycleComponent = {
   }
 };
 
-const wrapAuthenticating = () => () => <Authenticating />;
-
-const Dummy = props => {
-  return <Fragment>{props.children}</Fragment>;
-};
+const wrapAuthenticating = () => <Authenticating />;
+const Dummy = props => <Fragment>{props.children}</Fragment>;
 
 const withDefaultProps = defaultProps({
   isEnabled: true
@@ -41,7 +38,7 @@ export const withOidcSecure = compose(
   withOidcUser,
   withRouter,
   lifecycle(lifecycleComponent),
-  branch(isRequireAuthentication(), wrapAuthenticating)
+  branch(isRequireAuthentication(), renderComponent(wrapAuthenticating))
 );
 
 const OidcSecure = props => {

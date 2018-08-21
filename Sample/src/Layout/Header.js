@@ -35,7 +35,7 @@ export default () => (
                 </li>
                 <li>
                   <Link style={linkStyle} to="/admin">
-                    admin
+                    Admin
                   </Link>
                 </li>
                 <button onClick={props.logout}>logout</button>

@@ -6,7 +6,7 @@ Oidc Integration for react using Context API. Inspired by the [Redux OIDC Packag
 
 ### Description
 
-This package handles oidc-client package in a react application. It enables react application to connect with an external login, and protect the fully application or just few routes or component. The packages proposes the following features :
+This package handles oidc-client package in a react application. It enables react applications to connect with an external login, and protect the fully application or just few routes or component. The packages proposes the following features :
 
 - _AuthenticationProvider_ : Api Context Provider to initate the package (usually in index.js)
 - _AuthenticationConsummer_ : to manipulate some oidc objects and functions
@@ -36,5 +36,4 @@ To work with API Context, react>=16.3 and react-router are required.
 
 In the next releases we will propose :
 
-- Possibility to protect fully application or just some parts of it
 - Type definition for typescript using.
