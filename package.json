@@ -1,6 +1,6 @@
 {
   "name": "react-context-oidc",
-  "version": "1.0.15",
+  "version": "1.1.0",
   "author": "Olivier YOUF",
   "license": "MIT",
   "description": "A package for managing OpenID Connect authentication throw oidc client in redux apps using context Api",
@@ -44,7 +44,9 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "test": "jest --env=jsdom"
+    "test": "jest --env=jsdom",
+    "testwatch": "jest --env=jsdom --watch",
+    "coverage": "jest --env=jsdom --coverage"
   },
   "bugs": {
     "url": "https://github.com/oyouf/react-context-oidc/issues",
@@ -56,6 +58,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "react-test-renderer": "^16.4.2",
     "recompose": "^0.28.2"
   }
 }
