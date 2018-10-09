@@ -9,5 +9,6 @@ export {
   isRequireAuthentication,
   authenticateUser,
   trySilentAuthenticate,
-  oidcLog
+  oidcLog,
+  getUserManager
 } from './Services';

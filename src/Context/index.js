@@ -1,7 +1,8 @@
 export {
   AuthenticationProvider,
   AuthenticationConsumer,
-  withOidcUser
+  withOidcUser,
+  withOidcProps
 } from './AuthenticationContext.container';
 export { AuthenticationContext } from './AuthenticationContextCreator';
 export {

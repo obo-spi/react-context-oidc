@@ -221,4 +221,10 @@ const withOidcUser = Component => props => (
   </AuthenticationConsumer>
 );
 
-export { AuthenticationProvider, AuthenticationConsumer, withOidcUser };
+const withOidcProps = Component => props => (
+  <AuthenticationConsumer>
+    {oidcProps => <Component {...props} oidcProps={oidcProps} />}
+  </AuthenticationConsumer>
+);
+
+export { AuthenticationProvider, AuthenticationConsumer, withOidcUser, withOidcProps };
