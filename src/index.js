@@ -2,6 +2,7 @@ export {
   AuthenticationProvider,
   AuthenticationConsumer,
   withOidcUser,
+  withOidc,
   OidcSecure,
   withOidcSecure
 } from './Context';
