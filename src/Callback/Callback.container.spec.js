@@ -1,66 +1,104 @@
+import React from 'react';
 import * as container from './Callback.container';
-import { lifecycle } from 'recompose';
-
-jest.mock('../Services');
+import { render, wait } from 'react-testing-library';
+import 'react-testing-library/cleanup-after-each';
 
 describe('Callback container tests suite', () => {
   const history = {
-    push: jest.fn()
+    push: jest.fn(),
   };
   const userMock = {
     state: {
-      location: '/url'
-    }
+      url: '/url',
+    },
+  };
+  const logger = {
+    info: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
   };
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('should push location if exist when call onRedirectSuccess', () => {
-    container.onRedirectSuccess({ history })(userMock);
+    container.onRedirectSuccess(history, logger)(userMock);
     expect(history.push).toBeCalledWith('/url');
   });
 
   it('should not push if exist location doesnt exists when call onRedirectSuccess', () => {
-    container.onRedirectSuccess({ history })({ ...userMock, state: {} });
+    container.onRedirectSuccess(history, logger)({ ...userMock, state: {} });
     expect(history.push).not.toBeCalled();
   });
 
   it('Should push on error message when onError is call', () => {
-    container.onRedirectError({ history })({ message: 'errorMessage' });
+    container.onRedirectError(history, logger)({ message: 'errorMessage' });
     expect(history.push).toBeCalledWith(
-      '/authentication/not-authentified?message=errorMessage'
+      '/authentication/not-authenticated?message=errorMessage',
     );
   });
+});
 
-  it('Should call signinRedirectCallback and onRedirectSuccess when call componentDidMount', async () => {
-    const propsMock = {
-      userManager: {
-        signinRedirectCallback: jest.fn(() => userMock)
-      },
-      onRedirectSuccess: jest.fn(),
-      onRedirectError: jest.fn()
-    };
-    await container.componentDidMountFunction(propsMock);
-    expect(propsMock.userManager.signinRedirectCallback).toBeCalled();
-    expect(propsMock.onRedirectSuccess).toBeCalledWith(userMock);
+describe('Container integration tests', () => {
+  const user = {
+    state: {
+      url: 'http://myurl.me',
+    },
+  };
+  const logger = {
+    info: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+  };
+  const signinRedirectCallback = jest.fn();
+  const getUserManager = () => ({
+    signinRedirectCallback,
+  });
+  const historyMock = {
+    push: jest.fn(),
+  };
+
+  beforeEach(() => {
+    signinRedirectCallback.mockImplementation(() => Promise.resolve(user));
+    jest.clearAllMocks();
   });
 
-  it('Should call signinRedirectCallback and onRedirectError when call componentDidMount and throw error', async () => {
-    const propsMock = {
-      userManager: {
-        signinRedirectCallback: jest.fn(() => {
-          throw new Error('woops error');
-        })
-      },
-      onRedirectSuccess: jest.fn(),
-      onRedirectError: jest.fn()
-    };
-    await container.componentDidMountFunction(propsMock);
-    expect(propsMock.userManager.signinRedirectCallback).toBeCalled();
-    expect(propsMock.onRedirectError).toBeCalled();
-    expect(propsMock.onRedirectError.mock.calls[0][0].message).toEqual(
-      'woops error'
+  it('should call signinRedirect Callback and OnsucessCallback after all', async () => {
+    await wait(() =>
+      render(
+        <container.CallbackContainer
+          history={historyMock}
+          getUserManager={getUserManager}
+          oidcLog={logger}
+        />,
+      ),
+    );
+
+    expect(signinRedirectCallback).toBeCalled();
+    expect(historyMock.push).toBeCalledWith('http://myurl.me');
+    expect(logger.info).toBeCalledWith('Successfull login Callback');
+  });
+
+  it('should call signinRedirect Callback and onError if signin fail', async () => {
+    signinRedirectCallback.mockImplementation(() =>
+      Promise.reject({ message: 'error message' }),
+    );
+    await wait(() =>
+      render(
+        <container.CallbackContainer
+          history={historyMock}
+          getUserManager={getUserManager}
+          oidcLog={logger}
+        />,
+      ),
+    );
+
+    expect(signinRedirectCallback).toBeCalled();
+    expect(historyMock.push).toBeCalledWith(
+      '/authentication/not-authenticated?message=error%20message',
+    );
+    expect(logger.error).toBeCalledWith(
+      'There was an error handling the token callback: error message',
     );
   });
 });

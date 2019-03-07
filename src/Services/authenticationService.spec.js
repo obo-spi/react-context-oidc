@@ -1,13 +1,13 @@
-import * as authenticationService from './authenticationService';
 import { UserManager } from 'oidc-client';
+import * as authenticationService from './authenticationService';
 
 jest.mock('oidc-client', () => ({
-  UserManager: jest.fn()
+  UserManager: jest.fn(),
 }));
 
 describe('AuthenticationService tests suite', () => {
   const userManagerMock = {
-    test: 'mock'
+    test: 'mock',
   };
   beforeEach(() => {
     authenticationService.setUserManager(userManagerMock);
@@ -15,12 +15,6 @@ describe('AuthenticationService tests suite', () => {
   it('getUserManager should return the userManager object', () => {
     const userManager = authenticationService.getUserManager();
     expect(userManager).toBe(userManagerMock);
-  });
-
-  it('Should return userManager when initiate with a config object', () => {
-    const fakeConf = { fake: 'conf' };
-    authenticationService.authenticationService(fakeConf);
-    expect(UserManager).not.toBeCalled();
   });
 
   it('Should return userManager when initiate with a config object', () => {

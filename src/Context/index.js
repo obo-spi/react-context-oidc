@@ -1,11 +1,9 @@
 export {
-  AuthenticationProvider,
-  AuthenticationConsumer,
-  withOidcUser,
-  withOidc
+  default as AuthenticationProvider,
 } from './AuthenticationContext.container';
 export { AuthenticationContext } from './AuthenticationContextCreator';
 export {
   default as OidcSecure,
-  withOidcSecure
+  withOidcSecure,
+  withOidcUser,
 } from './AuthenticationConsumers';
