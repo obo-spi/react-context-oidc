@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthenticationConsumer } from 'react-context-oidc';
+import { AuthenticationContext } from 'react-context-oidc';
 import { Link } from 'react-router-dom';
 
 const headerStyle = {
@@ -16,7 +16,7 @@ const linkStyle = {
 
 export default () => (
   <header>
-    <AuthenticationConsumer>
+    <AuthenticationContext.Consumer>
       {props => {
         return (
           <div style={headerStyle}>
@@ -26,7 +26,7 @@ export default () => (
               </Link>
             </h3>
 
-            {props.oidcUser ? (
+            {props.oidcUser || !props.isEnabled ? (
               <ul>
                 <li>
                   <Link style={linkStyle} to="/dashboard">
@@ -46,6 +46,6 @@ export default () => (
           </div>
         );
       }}
-    </AuthenticationConsumer>
+    </AuthenticationContext.Consumer>
   </header>
 );

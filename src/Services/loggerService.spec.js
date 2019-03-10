@@ -8,7 +8,7 @@ describe('LoggerService tests suite', () => {
     debug: jest.fn(),
     warn: jest.fn(),
     info: jest.fn(),
-    error: jest.fn()
+    error: jest.fn(),
   };
   beforeEach(() => {
     Log.DEBUG = 4;
@@ -21,7 +21,6 @@ describe('LoggerService tests suite', () => {
   it('Should oidc setLogger and set local logger when call setLogger', () => {
     loggerService.setLogger(1, fakeConsole);
     expect(Log.logger).toBe(fakeConsole);
-    expect(loggerService._logger).toBe(fakeConsole);
   });
 
   it('Should throw Range error if setLogger set with bas level', () => {

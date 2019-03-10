@@ -4,37 +4,57 @@ import { AuthenticationContext } from './AuthenticationContextCreator';
 import { OidcRoutes } from '../Routes';
 
 const propTypes = {
-  notAuthentified: PropTypes.node,
+  notAuthenticated: PropTypes.node,
   notAuthorized: PropTypes.node,
-  isEnabled: PropTypes.bool,
+  authenticating: PropTypes.node,
   isLoading: PropTypes.bool.isRequired,
+  isEnabled: PropTypes.bool,
+  // eslint-disable-next-line
   oidcUser: PropTypes.object, //TODO : récuperer le proptypes depuis OIDC client ?
   error: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  isLogout: PropTypes.bool,
 };
 
 const defaultProps = {
-  notAuthentified: null,
+  notAuthenticated: null,
   notAuthorized: null,
-  isEnabled: true
+  authenticating: null,
+  isEnabled: true,
+  isLogout: false,
 };
 
-const AuthenticationProviderComponent = props => (
+const AuthenticationProviderComponent = ({
+  isLoading,
+  isEnabled,
+  oidcUser,
+  error,
+  login,
+  logout,
+  notAuthenticated,
+  notAuthorized,
+  authenticating,
+  children,
+  isLogout,
+}) => (
   <AuthenticationContext.Provider
     value={{
-      isLoading: props.isLoading,
-      oidcUser: props.oidcUser,
-      error: props.error,
-      login: props.login,
-      logout: props.logout
+      isLoading,
+      oidcUser,
+      error,
+      login,
+      logout,
+      authenticating,
+      isEnabled,
+      isLogout,
     }}
   >
     <OidcRoutes
-      notAuthentified={props.notAuthentified}
-      notAuthorized={props.notAuthorized}
+      notAuthenticated={notAuthenticated}
+      notAuthorized={notAuthorized}
     >
-      {props.children}
+      {children}
     </OidcRoutes>
   </AuthenticationContext.Provider>
 );

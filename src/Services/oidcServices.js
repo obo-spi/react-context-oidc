@@ -1,19 +1,19 @@
 import { oidcLog } from './loggerService';
 
-export const isRequireAuthentication = () => props => {
-  return props.isForce || !props.oidcUser;
-};
+export const isRequireAuthentication = (oidcUser, isForce) =>
+  isForce || !oidcUser || oidcUser.expired;
 
 export const authenticateUser = (userManager, location) => async (
-  isForce = false
+  isForce = false,
 ) => {
   if (!userManager || !userManager.getUser) {
     return;
   }
   const oidcUser = await userManager.getUser();
-  if (isRequireAuthentication()({ oidcUser, isForce })) {
+  if (isRequireAuthentication(oidcUser, isForce)) {
     oidcLog.info('authenticate user...');
-    await userManager.signinRedirect({ data: { location: location.pathname } });
+    const url = location.pathname + (location.search || '');
+    await userManager.signinRedirect({ data: { url } });
   }
 };
 
@@ -28,18 +28,5 @@ export const logoutUser = async userManager => {
   }
 };
 
-export const trySilentAuthenticateFunction = authenticateUser => (
-  userManager,
-  location
-) => async () => {
-  try {
-    await userManager.signinSilent();
-  } catch (exception) {
-    oidcLog.error('signinSilent failed', exception);
-    authenticateUser(userManager, location)(true);
-  }
-};
-
-export const trySilentAuthenticate = trySilentAuthenticateFunction(
-  authenticateUser
-);
+export const signinSilent = getUserManager => () =>
+  getUserManager().signinSilent();

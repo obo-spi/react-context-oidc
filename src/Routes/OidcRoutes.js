@@ -4,29 +4,26 @@ import PropTypes from 'prop-types';
 import AuthenticationRoutes from './AuthenticationRoutes';
 
 const propTypes = {
-  notAuthentified: PropTypes.any,
-  notAuthorized: PropTypes.any
+  notAuthenticated: PropTypes.node,
+  notAuthorized: PropTypes.node,
+  children: PropTypes.node,
 };
 
 const defaultProps = {
-  notAuthentified: null,
-  notAuthorized: null
+  notAuthenticated: null,
+  notAuthorized: null,
+  children: null,
 };
 
-const OidcRoutes = props => {
-  return (
-    <Switch>
-      <Route
-        path="/authentication"
-        component={AuthenticationRoutes(
-          props.notAuthentified,
-          props.notAuthorized
-        )}
-      />
-      <Route render={() => props.children} />
-    </Switch>
-  );
-};
+const OidcRoutes = ({ notAuthenticated, notAuthorized, children }) => (
+  <Switch>
+    <Route
+      path="/authentication"
+      component={AuthenticationRoutes(notAuthenticated, notAuthorized)}
+    />
+    <Route render={() => children} />
+  </Switch>
+);
 
 OidcRoutes.propTypes = propTypes;
 OidcRoutes.defaultProps = defaultProps;

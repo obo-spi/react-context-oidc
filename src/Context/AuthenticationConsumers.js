@@ -1,49 +1,79 @@
-import React, { Fragment } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
-import {
-  compose,
-  branch,
-  lifecycle,
-  defaultProps,
-  renderComponent
-} from 'recompose';
 
-import { withOidcUser } from './AuthenticationContext.container';
 import {
   authenticateUser,
   getUserManager,
   oidcLog,
-  isRequireAuthentication
+  isRequireAuthentication,
+  withServices
 } from '../Services';
 import { Authenticating } from '../OidcComponents';
+import { AuthenticationContext } from './AuthenticationContextCreator';
 
-const lifecycleComponent = {
-  async componentDidMount() {
-    oidcLog.info('Protected component mounted');
-    const usermanager = getUserManager();
-    await authenticateUser(usermanager, this.props.location)();
+//for tests
+export const useOidcSecureWithService = (
+  authenticateUser,
+  getUserManager,
+  location
+) => {
+  const { isEnabled, oidcUser, isLogout } = useContext(AuthenticationContext);
+  useEffect(() => {
+    if (isEnabled && !isLogout) {
+      oidcLog.info('Protected component mounted');
+      const usermanager = getUserManager();
+      authenticateUser(usermanager, location)();
+    }
+  }, [location, isEnabled, isLogout, authenticateUser, getUserManager]);
+
+  return oidcUser;
+};
+
+export const withOidcSecurewithRouter = WrappedComponent => ({
+  location,
+  authenticateUser,
+  getUserManager,
+  ...otherProps
+}) => {
+  const oidcUser = useOidcSecureWithService(
+    authenticateUser,
+    getUserManager,
+    location
+  );
+  const requiredAuth = useMemo(() => isRequireAuthentication(oidcUser, false), [
+    oidcUser
+  ]);
+  if (requiredAuth) {
+    return <Authenticating />;
   }
+  return <WrappedComponent {...otherProps} />;
 };
 
-const wrapAuthenticating = () => <Authenticating />;
-const Dummy = props => <Fragment>{props.children}</Fragment>;
-
-const withDefaultProps = defaultProps({
-  isEnabled: true
-});
-
-export const withOidcSecure = compose(
-  withDefaultProps,
-  branch(props => !props.isEnabled, renderComponent(Dummy)),
-  withOidcUser,
-  withRouter,
-  lifecycle(lifecycleComponent),
-  branch(isRequireAuthentication(), renderComponent(wrapAuthenticating))
-);
-
-const OidcSecure = props => {
-  const Secure = withOidcSecure(Dummy);
-  return <Secure {...props}>{props.children}</Secure>;
+const OidcSecure = ({ children, location }) => {
+  useOidcSecure(location);
+  return <div>{children}</div>;
 };
 
-export default OidcSecure;
+// for usage
+
+export const withOidcSecure = WrappedComponent =>
+  withRouter(
+    withServices(withOidcSecurewithRouter(WrappedComponent), {
+      authenticateUser,
+      getUserManager
+    })
+  );
+
+export const useOidcSecure = location =>
+  useOidcSecureWithService(authenticateUser, getUserManager, location);
+
+export const withOidcUser = Component => props => {
+  const { oidcUser } = useContext(AuthenticationContext);
+  const { children } = props;
+  return (
+    <Component {...props} oidcUser={oidcUser}>
+      {children}
+    </Component>
+  );
+};
+export default withRouter(OidcSecure);

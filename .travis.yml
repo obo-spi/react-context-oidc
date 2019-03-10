@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-  - "8"
-  - "9"
+  - '8'
+  - '10'
 
 before_install:
-  - yarn add jest react react-test-renderer babel-preset-react-app babel-preset-es2015 babel-preset-stage-0 react-dom react-router-dom prop-types oidc-client webpack webpack-command webpack-node-externals babel-loader
+  - yarn add jest react react-testing-library @babel/preset-react @babel/preset-env @babel/plugin-syntax-import-meta @babel/plugin-syntax-dynamic-import @babel/plugin-proposal-class-properties react-dom react-router-dom prop-types oidc-client webpack webpack-command webpack-node-externals babel-loader @babel/plugin-proposal-json-strings @babel/plugin-transform-runtime react-hooks-testing-library jest-dom
 install: yarn
 script:
   - yarn test
@@ -13,12 +13,12 @@ jobs:
   include:
     - stage: npm release
       if: tag IS present
-      node_js: "8"
+      node_js: '8'
       script: yarn build
       deploy:
         provider: npm
-        email: "$NPM_EMAIL"
-        api_key: "$NPM_TOKEN"
+        email: '$NPM_EMAIL'
+        api_key: '$NPM_TOKEN'
         skip_cleanup: true
         on:
           tags: true
